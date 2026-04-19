@@ -1,0 +1,7 @@
+class: Utilisateur
+table: utilisateur
+fields:
+  nom: String
+  email: String
+  motDePasse: String
+  role: String

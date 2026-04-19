@@ -1,0 +1,17 @@
+class: Participant
+table: participant
+fields:
+  seanceId: int
+  nom: String
+  prenom: String
+  telephone: String
+  profession: String?
+  statutLogement: String
+  lieu: String?
+  localite: String
+  quartier: String?
+  besoinsExprimes: List<String>
+  ressenti: String?
+  consentement: bool
+  statut: String
+  dateInscription: DateTime

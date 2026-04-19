@@ -1,0 +1,15 @@
+class: Seance
+table: seance
+fields:
+  nom: String
+  objectifs: String?
+  zone: String
+  objectifParticipants: int
+  organisateur: String
+  datePrevue: DateTime
+  heureDebut: String?
+  heureFin: String?
+  estTerminee: bool
+  gadgetsPrevus: int
+  gadgetsDistribues: int
+  totalLogistique: double

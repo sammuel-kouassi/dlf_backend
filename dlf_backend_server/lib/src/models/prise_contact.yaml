@@ -1,0 +1,15 @@
+class: PriseContact
+table: prise_contact
+fields:
+  seanceId: int
+  nomContact: String
+  telephone: String
+  date: DateTime
+  objetMission: String
+  directionRegionale: String
+  agence: String?
+  quartier: String?
+  site: String?
+  pointsAbordes: List<String>
+  observations: String?
+  signatureBase64: String?

@@ -1,0 +1,38 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dlf_backend_flutter",
+            "cwd": "${workspaceFolder}/dlf_backend_flutter",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart"
+        },
+        {
+            "name": "dlf_backend_server",
+            "cwd": "${workspaceFolder}/dlf_backend_server",
+            "request": "launch",
+            "type": "dart",
+            "preLaunchTask": "docker_compose_up",
+            "program": "bin/main.dart",
+            "env": {
+                "SERVERPOD_PASSWORD_database": "z8Jf14yNeUgPQJcLnnVKGpX0yK3jaCkT"
+            },
+            "args": [
+                "--apply-migrations"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "dlf_backend (full stack)",
+            "configurations": [
+                "dlf_backend_server",
+                "dlf_backend_flutter"
+            ],
+            "presentation": {
+                "order": 1
+            }
+        }
+    ]
+}

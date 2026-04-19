@@ -1,0 +1,7 @@
+class: Gadget
+table: gadget
+fields:
+  nom: String
+  categorie: String
+  stockInitial: int
+  distribues: int

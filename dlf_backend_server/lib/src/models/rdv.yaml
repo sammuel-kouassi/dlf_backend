@@ -1,0 +1,10 @@
+class: RendezVous
+table: rdv
+fields:
+  seanceId: int
+  titre: String
+  contact: String
+  dateRdv: DateTime
+  heure: String
+  lieu: String
+  statut: String

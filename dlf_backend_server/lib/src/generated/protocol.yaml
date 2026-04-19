@@ -1,0 +1,38 @@
+emailIdp:
+  - login:
+  - startRegistration:
+  - verifyRegistrationCode:
+  - finishRegistration:
+  - startPasswordReset:
+  - verifyPasswordResetCode:
+  - finishPasswordReset:
+  - hasAccount:
+jwtRefresh:
+  - refreshAccessToken:
+auth:
+  - login:
+  - updateUser:
+gadget:
+  - getAllGadgets:
+  - updateGadget:
+participant:
+  - addParticipant:
+  - getParticipantsBySeance:
+  - getAllParticipants:
+  - deleteParticipant:
+  - updateParticipant:
+priseContact:
+  - addPriseContact:
+  - getAllPriseContacts:
+  - updatePriseContact:
+  - deletePriseContact:
+rdv:
+  - addRdv:
+  - getAllRdvs:
+  - updateRdv:
+  - deleteRdv:
+seance:
+  - getAllSeances:
+  - updateSeance:
+greeting:
+  - hello:

@@ -1,0 +1,9 @@
+class: Distribution
+table: distribution
+fields:
+  seanceId: int
+  participantId: int
+  gadgetId: int
+  quantite: int
+  dateDistribution: DateTime
+  agentId: int
