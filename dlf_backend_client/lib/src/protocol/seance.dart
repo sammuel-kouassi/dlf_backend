@@ -11,15 +11,22 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'package:dlf_backend_client/src/protocol/protocol.dart' as _i2;
 
 abstract class Seance implements _i1.SerializableModel {
   Seance._({
     this.id,
     required this.nom,
-    this.objectifs,
-    required this.zone,
+    this.motifs,
+    this.typeSeance,
+    this.cible,
+    this.zone,
+    this.ville,
+    this.quartier,
     required this.objectifParticipants,
     required this.organisateur,
+    this.presentateur,
+    this.assistants,
     required this.datePrevue,
     this.heureDebut,
     this.heureFin,
@@ -27,15 +34,23 @@ abstract class Seance implements _i1.SerializableModel {
     required this.gadgetsPrevus,
     required this.gadgetsDistribues,
     required this.totalLogistique,
+    this.nbParticipantsEstime,
+    required this.evaluation,
   });
 
   factory Seance({
     int? id,
     required String nom,
-    String? objectifs,
-    required String zone,
+    String? motifs,
+    String? typeSeance,
+    String? cible,
+    String? zone,
+    String? ville,
+    String? quartier,
     required int objectifParticipants,
     required String organisateur,
+    String? presentateur,
+    List<String>? assistants,
     required DateTime datePrevue,
     String? heureDebut,
     String? heureFin,
@@ -43,16 +58,28 @@ abstract class Seance implements _i1.SerializableModel {
     required int gadgetsPrevus,
     required int gadgetsDistribues,
     required double totalLogistique,
+    int? nbParticipantsEstime,
+    required bool evaluation,
   }) = _SeanceImpl;
 
   factory Seance.fromJson(Map<String, dynamic> jsonSerialization) {
     return Seance(
       id: jsonSerialization['id'] as int?,
       nom: jsonSerialization['nom'] as String,
-      objectifs: jsonSerialization['objectifs'] as String?,
-      zone: jsonSerialization['zone'] as String,
+      motifs: jsonSerialization['motifs'] as String?,
+      typeSeance: jsonSerialization['typeSeance'] as String?,
+      cible: jsonSerialization['cible'] as String?,
+      zone: jsonSerialization['zone'] as String?,
+      ville: jsonSerialization['ville'] as String?,
+      quartier: jsonSerialization['quartier'] as String?,
       objectifParticipants: jsonSerialization['objectifParticipants'] as int,
       organisateur: jsonSerialization['organisateur'] as String,
+      presentateur: jsonSerialization['presentateur'] as String?,
+      assistants: jsonSerialization['assistants'] == null
+          ? null
+          : _i2.Protocol().deserialize<List<String>>(
+              jsonSerialization['assistants'],
+            ),
       datePrevue: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['datePrevue'],
       ),
@@ -64,6 +91,10 @@ abstract class Seance implements _i1.SerializableModel {
       gadgetsPrevus: jsonSerialization['gadgetsPrevus'] as int,
       gadgetsDistribues: jsonSerialization['gadgetsDistribues'] as int,
       totalLogistique: (jsonSerialization['totalLogistique'] as num).toDouble(),
+      nbParticipantsEstime: jsonSerialization['nbParticipantsEstime'] as int?,
+      evaluation: _i1.BoolJsonExtension.fromJson(
+        jsonSerialization['evaluation'],
+      ),
     );
   }
 
@@ -74,13 +105,25 @@ abstract class Seance implements _i1.SerializableModel {
 
   String nom;
 
-  String? objectifs;
+  String? motifs;
 
-  String zone;
+  String? typeSeance;
+
+  String? cible;
+
+  String? zone;
+
+  String? ville;
+
+  String? quartier;
 
   int objectifParticipants;
 
   String organisateur;
+
+  String? presentateur;
+
+  List<String>? assistants;
 
   DateTime datePrevue;
 
@@ -96,16 +139,26 @@ abstract class Seance implements _i1.SerializableModel {
 
   double totalLogistique;
 
+  int? nbParticipantsEstime;
+
+  bool evaluation;
+
   /// Returns a shallow copy of this [Seance]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   Seance copyWith({
     int? id,
     String? nom,
-    String? objectifs,
+    String? motifs,
+    String? typeSeance,
+    String? cible,
     String? zone,
+    String? ville,
+    String? quartier,
     int? objectifParticipants,
     String? organisateur,
+    String? presentateur,
+    List<String>? assistants,
     DateTime? datePrevue,
     String? heureDebut,
     String? heureFin,
@@ -113,6 +166,8 @@ abstract class Seance implements _i1.SerializableModel {
     int? gadgetsPrevus,
     int? gadgetsDistribues,
     double? totalLogistique,
+    int? nbParticipantsEstime,
+    bool? evaluation,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -120,10 +175,16 @@ abstract class Seance implements _i1.SerializableModel {
       '__className__': 'Seance',
       if (id != null) 'id': id,
       'nom': nom,
-      if (objectifs != null) 'objectifs': objectifs,
-      'zone': zone,
+      if (motifs != null) 'motifs': motifs,
+      if (typeSeance != null) 'typeSeance': typeSeance,
+      if (cible != null) 'cible': cible,
+      if (zone != null) 'zone': zone,
+      if (ville != null) 'ville': ville,
+      if (quartier != null) 'quartier': quartier,
       'objectifParticipants': objectifParticipants,
       'organisateur': organisateur,
+      if (presentateur != null) 'presentateur': presentateur,
+      if (assistants != null) 'assistants': assistants?.toJson(),
       'datePrevue': datePrevue.toJson(),
       if (heureDebut != null) 'heureDebut': heureDebut,
       if (heureFin != null) 'heureFin': heureFin,
@@ -131,6 +192,9 @@ abstract class Seance implements _i1.SerializableModel {
       'gadgetsPrevus': gadgetsPrevus,
       'gadgetsDistribues': gadgetsDistribues,
       'totalLogistique': totalLogistique,
+      if (nbParticipantsEstime != null)
+        'nbParticipantsEstime': nbParticipantsEstime,
+      'evaluation': evaluation,
     };
   }
 
@@ -146,10 +210,16 @@ class _SeanceImpl extends Seance {
   _SeanceImpl({
     int? id,
     required String nom,
-    String? objectifs,
-    required String zone,
+    String? motifs,
+    String? typeSeance,
+    String? cible,
+    String? zone,
+    String? ville,
+    String? quartier,
     required int objectifParticipants,
     required String organisateur,
+    String? presentateur,
+    List<String>? assistants,
     required DateTime datePrevue,
     String? heureDebut,
     String? heureFin,
@@ -157,13 +227,21 @@ class _SeanceImpl extends Seance {
     required int gadgetsPrevus,
     required int gadgetsDistribues,
     required double totalLogistique,
+    int? nbParticipantsEstime,
+    required bool evaluation,
   }) : super._(
          id: id,
          nom: nom,
-         objectifs: objectifs,
+         motifs: motifs,
+         typeSeance: typeSeance,
+         cible: cible,
          zone: zone,
+         ville: ville,
+         quartier: quartier,
          objectifParticipants: objectifParticipants,
          organisateur: organisateur,
+         presentateur: presentateur,
+         assistants: assistants,
          datePrevue: datePrevue,
          heureDebut: heureDebut,
          heureFin: heureFin,
@@ -171,6 +249,8 @@ class _SeanceImpl extends Seance {
          gadgetsPrevus: gadgetsPrevus,
          gadgetsDistribues: gadgetsDistribues,
          totalLogistique: totalLogistique,
+         nbParticipantsEstime: nbParticipantsEstime,
+         evaluation: evaluation,
        );
 
   /// Returns a shallow copy of this [Seance]
@@ -180,10 +260,16 @@ class _SeanceImpl extends Seance {
   Seance copyWith({
     Object? id = _Undefined,
     String? nom,
-    Object? objectifs = _Undefined,
-    String? zone,
+    Object? motifs = _Undefined,
+    Object? typeSeance = _Undefined,
+    Object? cible = _Undefined,
+    Object? zone = _Undefined,
+    Object? ville = _Undefined,
+    Object? quartier = _Undefined,
     int? objectifParticipants,
     String? organisateur,
+    Object? presentateur = _Undefined,
+    Object? assistants = _Undefined,
     DateTime? datePrevue,
     Object? heureDebut = _Undefined,
     Object? heureFin = _Undefined,
@@ -191,14 +277,24 @@ class _SeanceImpl extends Seance {
     int? gadgetsPrevus,
     int? gadgetsDistribues,
     double? totalLogistique,
+    Object? nbParticipantsEstime = _Undefined,
+    bool? evaluation,
   }) {
     return Seance(
       id: id is int? ? id : this.id,
       nom: nom ?? this.nom,
-      objectifs: objectifs is String? ? objectifs : this.objectifs,
-      zone: zone ?? this.zone,
+      motifs: motifs is String? ? motifs : this.motifs,
+      typeSeance: typeSeance is String? ? typeSeance : this.typeSeance,
+      cible: cible is String? ? cible : this.cible,
+      zone: zone is String? ? zone : this.zone,
+      ville: ville is String? ? ville : this.ville,
+      quartier: quartier is String? ? quartier : this.quartier,
       objectifParticipants: objectifParticipants ?? this.objectifParticipants,
       organisateur: organisateur ?? this.organisateur,
+      presentateur: presentateur is String? ? presentateur : this.presentateur,
+      assistants: assistants is List<String>?
+          ? assistants
+          : this.assistants?.map((e0) => e0).toList(),
       datePrevue: datePrevue ?? this.datePrevue,
       heureDebut: heureDebut is String? ? heureDebut : this.heureDebut,
       heureFin: heureFin is String? ? heureFin : this.heureFin,
@@ -206,6 +302,10 @@ class _SeanceImpl extends Seance {
       gadgetsPrevus: gadgetsPrevus ?? this.gadgetsPrevus,
       gadgetsDistribues: gadgetsDistribues ?? this.gadgetsDistribues,
       totalLogistique: totalLogistique ?? this.totalLogistique,
+      nbParticipantsEstime: nbParticipantsEstime is int?
+          ? nbParticipantsEstime
+          : this.nbParticipantsEstime,
+      evaluation: evaluation ?? this.evaluation,
     );
   }
 }

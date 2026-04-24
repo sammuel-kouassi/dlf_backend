@@ -19,19 +19,21 @@ import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
 import 'distribution.dart' as _i5;
 import 'gadget.dart' as _i6;
 import 'greetings/greeting.dart' as _i7;
-import 'participant.dart' as _i8;
-import 'prise_contact.dart' as _i9;
-import 'rdv.dart' as _i10;
-import 'seance.dart' as _i11;
-import 'utilisateur.dart' as _i12;
-import 'package:dlf_backend_server/src/generated/gadget.dart' as _i13;
-import 'package:dlf_backend_server/src/generated/participant.dart' as _i14;
-import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i15;
-import 'package:dlf_backend_server/src/generated/rdv.dart' as _i16;
-import 'package:dlf_backend_server/src/generated/seance.dart' as _i17;
+import 'image.dart' as _i8;
+import 'participant.dart' as _i9;
+import 'prise_contact.dart' as _i10;
+import 'rdv.dart' as _i11;
+import 'seance.dart' as _i12;
+import 'utilisateur.dart' as _i13;
+import 'package:dlf_backend_server/src/generated/gadget.dart' as _i14;
+import 'package:dlf_backend_server/src/generated/participant.dart' as _i15;
+import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i16;
+import 'package:dlf_backend_server/src/generated/rdv.dart' as _i17;
+import 'package:dlf_backend_server/src/generated/seance.dart' as _i18;
 export 'distribution.dart';
 export 'gadget.dart';
 export 'greetings/greeting.dart';
+export 'image.dart';
 export 'participant.dart';
 export 'prise_contact.dart';
 export 'rdv.dart';
@@ -156,6 +158,62 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'gadget_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'image',
+      dartName: 'Image',
+      schema: 'public',
+      module: 'dlf_backend',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'image_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'seanceId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'url',
+          columnType: _i2.ColumnType.json,
+          isNullable: false,
+          dartType: 'List<String>',
+        ),
+        _i2.ColumnDefinition(
+          name: 'legende',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'date',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'image_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -484,7 +542,19 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
-          name: 'objectifs',
+          name: 'motifs',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'typeSeance',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'cible',
           columnType: _i2.ColumnType.text,
           isNullable: true,
           dartType: 'String?',
@@ -492,8 +562,20 @@ class Protocol extends _i1.SerializationManagerServer {
         _i2.ColumnDefinition(
           name: 'zone',
           columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'String',
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'ville',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'quartier',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
         ),
         _i2.ColumnDefinition(
           name: 'objectifParticipants',
@@ -506,6 +588,18 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'presentateur',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'assistants',
+          columnType: _i2.ColumnType.json,
+          isNullable: true,
+          dartType: 'List<String>?',
         ),
         _i2.ColumnDefinition(
           name: 'datePrevue',
@@ -548,6 +642,18 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.doublePrecision,
           isNullable: false,
           dartType: 'double',
+        ),
+        _i2.ColumnDefinition(
+          name: 'nbParticipantsEstime',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'evaluation',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
         ),
       ],
       foreignKeys: [],
@@ -665,20 +771,23 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i7.Greeting) {
       return _i7.Greeting.fromJson(data) as T;
     }
-    if (t == _i8.Participant) {
-      return _i8.Participant.fromJson(data) as T;
+    if (t == _i8.Image) {
+      return _i8.Image.fromJson(data) as T;
     }
-    if (t == _i9.PriseContact) {
-      return _i9.PriseContact.fromJson(data) as T;
+    if (t == _i9.Participant) {
+      return _i9.Participant.fromJson(data) as T;
     }
-    if (t == _i10.RendezVous) {
-      return _i10.RendezVous.fromJson(data) as T;
+    if (t == _i10.PriseContact) {
+      return _i10.PriseContact.fromJson(data) as T;
     }
-    if (t == _i11.Seance) {
-      return _i11.Seance.fromJson(data) as T;
+    if (t == _i11.RendezVous) {
+      return _i11.RendezVous.fromJson(data) as T;
     }
-    if (t == _i12.Utilisateur) {
-      return _i12.Utilisateur.fromJson(data) as T;
+    if (t == _i12.Seance) {
+      return _i12.Seance.fromJson(data) as T;
+    }
+    if (t == _i13.Utilisateur) {
+      return _i13.Utilisateur.fromJson(data) as T;
     }
     if (t == _i1.getType<_i5.Distribution?>()) {
       return (data != null ? _i5.Distribution.fromJson(data) : null) as T;
@@ -689,46 +798,55 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i7.Greeting?>()) {
       return (data != null ? _i7.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Participant?>()) {
-      return (data != null ? _i8.Participant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.Image?>()) {
+      return (data != null ? _i8.Image.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.PriseContact?>()) {
-      return (data != null ? _i9.PriseContact.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Participant?>()) {
+      return (data != null ? _i9.Participant.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.RendezVous?>()) {
-      return (data != null ? _i10.RendezVous.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.PriseContact?>()) {
+      return (data != null ? _i10.PriseContact.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.Seance?>()) {
-      return (data != null ? _i11.Seance.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.RendezVous?>()) {
+      return (data != null ? _i11.RendezVous.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.Utilisateur?>()) {
-      return (data != null ? _i12.Utilisateur.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.Seance?>()) {
+      return (data != null ? _i12.Seance.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i13.Utilisateur?>()) {
+      return (data != null ? _i13.Utilisateur.fromJson(data) : null) as T;
     }
     if (t == List<String>) {
       return (data as List).map((e) => deserialize<String>(e)).toList() as T;
     }
-    if (t == List<_i13.Gadget>) {
-      return (data as List).map((e) => deserialize<_i13.Gadget>(e)).toList()
+    if (t == _i1.getType<List<String>?>()) {
+      return (data != null
+              ? (data as List).map((e) => deserialize<String>(e)).toList()
+              : null)
           as T;
     }
-    if (t == List<_i14.Participant>) {
+    if (t == List<_i14.Gadget>) {
+      return (data as List).map((e) => deserialize<_i14.Gadget>(e)).toList()
+          as T;
+    }
+    if (t == List<_i15.Participant>) {
       return (data as List)
-              .map((e) => deserialize<_i14.Participant>(e))
+              .map((e) => deserialize<_i15.Participant>(e))
               .toList()
           as T;
     }
-    if (t == List<_i15.PriseContact>) {
+    if (t == List<_i16.PriseContact>) {
       return (data as List)
-              .map((e) => deserialize<_i15.PriseContact>(e))
+              .map((e) => deserialize<_i16.PriseContact>(e))
               .toList()
           as T;
     }
-    if (t == List<_i16.RendezVous>) {
-      return (data as List).map((e) => deserialize<_i16.RendezVous>(e)).toList()
+    if (t == List<_i17.RendezVous>) {
+      return (data as List).map((e) => deserialize<_i17.RendezVous>(e)).toList()
           as T;
     }
-    if (t == List<_i17.Seance>) {
-      return (data as List).map((e) => deserialize<_i17.Seance>(e)).toList()
+    if (t == List<_i18.Seance>) {
+      return (data as List).map((e) => deserialize<_i18.Seance>(e)).toList()
           as T;
     }
     try {
@@ -748,11 +866,12 @@ class Protocol extends _i1.SerializationManagerServer {
       _i5.Distribution => 'Distribution',
       _i6.Gadget => 'Gadget',
       _i7.Greeting => 'Greeting',
-      _i8.Participant => 'Participant',
-      _i9.PriseContact => 'PriseContact',
-      _i10.RendezVous => 'RendezVous',
-      _i11.Seance => 'Seance',
-      _i12.Utilisateur => 'Utilisateur',
+      _i8.Image => 'Image',
+      _i9.Participant => 'Participant',
+      _i10.PriseContact => 'PriseContact',
+      _i11.RendezVous => 'RendezVous',
+      _i12.Seance => 'Seance',
+      _i13.Utilisateur => 'Utilisateur',
       _ => null,
     };
   }
@@ -773,15 +892,17 @@ class Protocol extends _i1.SerializationManagerServer {
         return 'Gadget';
       case _i7.Greeting():
         return 'Greeting';
-      case _i8.Participant():
+      case _i8.Image():
+        return 'Image';
+      case _i9.Participant():
         return 'Participant';
-      case _i9.PriseContact():
+      case _i10.PriseContact():
         return 'PriseContact';
-      case _i10.RendezVous():
+      case _i11.RendezVous():
         return 'RendezVous';
-      case _i11.Seance():
+      case _i12.Seance():
         return 'Seance';
-      case _i12.Utilisateur():
+      case _i13.Utilisateur():
         return 'Utilisateur';
     }
     className = _i2.Protocol().getClassNameForObject(data);
@@ -814,20 +935,23 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName == 'Greeting') {
       return deserialize<_i7.Greeting>(data['data']);
     }
+    if (dataClassName == 'Image') {
+      return deserialize<_i8.Image>(data['data']);
+    }
     if (dataClassName == 'Participant') {
-      return deserialize<_i8.Participant>(data['data']);
+      return deserialize<_i9.Participant>(data['data']);
     }
     if (dataClassName == 'PriseContact') {
-      return deserialize<_i9.PriseContact>(data['data']);
+      return deserialize<_i10.PriseContact>(data['data']);
     }
     if (dataClassName == 'RendezVous') {
-      return deserialize<_i10.RendezVous>(data['data']);
+      return deserialize<_i11.RendezVous>(data['data']);
     }
     if (dataClassName == 'Seance') {
-      return deserialize<_i11.Seance>(data['data']);
+      return deserialize<_i12.Seance>(data['data']);
     }
     if (dataClassName == 'Utilisateur') {
-      return deserialize<_i12.Utilisateur>(data['data']);
+      return deserialize<_i13.Utilisateur>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -869,16 +993,18 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i5.Distribution.t;
       case _i6.Gadget:
         return _i6.Gadget.t;
-      case _i8.Participant:
-        return _i8.Participant.t;
-      case _i9.PriseContact:
-        return _i9.PriseContact.t;
-      case _i10.RendezVous:
-        return _i10.RendezVous.t;
-      case _i11.Seance:
-        return _i11.Seance.t;
-      case _i12.Utilisateur:
-        return _i12.Utilisateur.t;
+      case _i8.Image:
+        return _i8.Image.t;
+      case _i9.Participant:
+        return _i9.Participant.t;
+      case _i10.PriseContact:
+        return _i10.PriseContact.t;
+      case _i11.RendezVous:
+        return _i11.RendezVous.t;
+      case _i12.Seance:
+        return _i12.Seance.t;
+      case _i13.Utilisateur:
+        return _i13.Utilisateur.t;
     }
     return null;
   }

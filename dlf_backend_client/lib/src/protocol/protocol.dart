@@ -14,23 +14,25 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'distribution.dart' as _i2;
 import 'gadget.dart' as _i3;
 import 'greetings/greeting.dart' as _i4;
-import 'participant.dart' as _i5;
-import 'prise_contact.dart' as _i6;
-import 'rdv.dart' as _i7;
-import 'seance.dart' as _i8;
-import 'utilisateur.dart' as _i9;
-import 'package:dlf_backend_client/src/protocol/gadget.dart' as _i10;
-import 'package:dlf_backend_client/src/protocol/participant.dart' as _i11;
-import 'package:dlf_backend_client/src/protocol/prise_contact.dart' as _i12;
-import 'package:dlf_backend_client/src/protocol/rdv.dart' as _i13;
-import 'package:dlf_backend_client/src/protocol/seance.dart' as _i14;
+import 'image.dart' as _i5;
+import 'participant.dart' as _i6;
+import 'prise_contact.dart' as _i7;
+import 'rdv.dart' as _i8;
+import 'seance.dart' as _i9;
+import 'utilisateur.dart' as _i10;
+import 'package:dlf_backend_client/src/protocol/gadget.dart' as _i11;
+import 'package:dlf_backend_client/src/protocol/participant.dart' as _i12;
+import 'package:dlf_backend_client/src/protocol/prise_contact.dart' as _i13;
+import 'package:dlf_backend_client/src/protocol/rdv.dart' as _i14;
+import 'package:dlf_backend_client/src/protocol/seance.dart' as _i15;
 import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _i15;
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i16;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _i17;
 export 'distribution.dart';
 export 'gadget.dart';
 export 'greetings/greeting.dart';
+export 'image.dart';
 export 'participant.dart';
 export 'prise_contact.dart';
 export 'rdv.dart';
@@ -81,20 +83,23 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i4.Greeting) {
       return _i4.Greeting.fromJson(data) as T;
     }
-    if (t == _i5.Participant) {
-      return _i5.Participant.fromJson(data) as T;
+    if (t == _i5.Image) {
+      return _i5.Image.fromJson(data) as T;
     }
-    if (t == _i6.PriseContact) {
-      return _i6.PriseContact.fromJson(data) as T;
+    if (t == _i6.Participant) {
+      return _i6.Participant.fromJson(data) as T;
     }
-    if (t == _i7.RendezVous) {
-      return _i7.RendezVous.fromJson(data) as T;
+    if (t == _i7.PriseContact) {
+      return _i7.PriseContact.fromJson(data) as T;
     }
-    if (t == _i8.Seance) {
-      return _i8.Seance.fromJson(data) as T;
+    if (t == _i8.RendezVous) {
+      return _i8.RendezVous.fromJson(data) as T;
     }
-    if (t == _i9.Utilisateur) {
-      return _i9.Utilisateur.fromJson(data) as T;
+    if (t == _i9.Seance) {
+      return _i9.Seance.fromJson(data) as T;
+    }
+    if (t == _i10.Utilisateur) {
+      return _i10.Utilisateur.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Distribution?>()) {
       return (data != null ? _i2.Distribution.fromJson(data) : null) as T;
@@ -105,53 +110,62 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i4.Greeting?>()) {
       return (data != null ? _i4.Greeting.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i5.Participant?>()) {
-      return (data != null ? _i5.Participant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i5.Image?>()) {
+      return (data != null ? _i5.Image.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i6.PriseContact?>()) {
-      return (data != null ? _i6.PriseContact.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i6.Participant?>()) {
+      return (data != null ? _i6.Participant.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.RendezVous?>()) {
-      return (data != null ? _i7.RendezVous.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.PriseContact?>()) {
+      return (data != null ? _i7.PriseContact.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.Seance?>()) {
-      return (data != null ? _i8.Seance.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.RendezVous?>()) {
+      return (data != null ? _i8.RendezVous.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Utilisateur?>()) {
-      return (data != null ? _i9.Utilisateur.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Seance?>()) {
+      return (data != null ? _i9.Seance.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i10.Utilisateur?>()) {
+      return (data != null ? _i10.Utilisateur.fromJson(data) : null) as T;
     }
     if (t == List<String>) {
       return (data as List).map((e) => deserialize<String>(e)).toList() as T;
     }
-    if (t == List<_i10.Gadget>) {
-      return (data as List).map((e) => deserialize<_i10.Gadget>(e)).toList()
+    if (t == _i1.getType<List<String>?>()) {
+      return (data != null
+              ? (data as List).map((e) => deserialize<String>(e)).toList()
+              : null)
           as T;
     }
-    if (t == List<_i11.Participant>) {
+    if (t == List<_i11.Gadget>) {
+      return (data as List).map((e) => deserialize<_i11.Gadget>(e)).toList()
+          as T;
+    }
+    if (t == List<_i12.Participant>) {
       return (data as List)
-              .map((e) => deserialize<_i11.Participant>(e))
+              .map((e) => deserialize<_i12.Participant>(e))
               .toList()
           as T;
     }
-    if (t == List<_i12.PriseContact>) {
+    if (t == List<_i13.PriseContact>) {
       return (data as List)
-              .map((e) => deserialize<_i12.PriseContact>(e))
+              .map((e) => deserialize<_i13.PriseContact>(e))
               .toList()
           as T;
     }
-    if (t == List<_i13.RendezVous>) {
-      return (data as List).map((e) => deserialize<_i13.RendezVous>(e)).toList()
+    if (t == List<_i14.RendezVous>) {
+      return (data as List).map((e) => deserialize<_i14.RendezVous>(e)).toList()
           as T;
     }
-    if (t == List<_i14.Seance>) {
-      return (data as List).map((e) => deserialize<_i14.Seance>(e)).toList()
+    if (t == List<_i15.Seance>) {
+      return (data as List).map((e) => deserialize<_i15.Seance>(e)).toList()
           as T;
     }
-    try {
-      return _i15.Protocol().deserialize<T>(data, t);
-    } on _i1.DeserializationTypeNotFoundException catch (_) {}
     try {
       return _i16.Protocol().deserialize<T>(data, t);
+    } on _i1.DeserializationTypeNotFoundException catch (_) {}
+    try {
+      return _i17.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -161,11 +175,12 @@ class Protocol extends _i1.SerializationManager {
       _i2.Distribution => 'Distribution',
       _i3.Gadget => 'Gadget',
       _i4.Greeting => 'Greeting',
-      _i5.Participant => 'Participant',
-      _i6.PriseContact => 'PriseContact',
-      _i7.RendezVous => 'RendezVous',
-      _i8.Seance => 'Seance',
-      _i9.Utilisateur => 'Utilisateur',
+      _i5.Image => 'Image',
+      _i6.Participant => 'Participant',
+      _i7.PriseContact => 'PriseContact',
+      _i8.RendezVous => 'RendezVous',
+      _i9.Seance => 'Seance',
+      _i10.Utilisateur => 'Utilisateur',
       _ => null,
     };
   }
@@ -186,22 +201,24 @@ class Protocol extends _i1.SerializationManager {
         return 'Gadget';
       case _i4.Greeting():
         return 'Greeting';
-      case _i5.Participant():
+      case _i5.Image():
+        return 'Image';
+      case _i6.Participant():
         return 'Participant';
-      case _i6.PriseContact():
+      case _i7.PriseContact():
         return 'PriseContact';
-      case _i7.RendezVous():
+      case _i8.RendezVous():
         return 'RendezVous';
-      case _i8.Seance():
+      case _i9.Seance():
         return 'Seance';
-      case _i9.Utilisateur():
+      case _i10.Utilisateur():
         return 'Utilisateur';
     }
-    className = _i15.Protocol().getClassNameForObject(data);
+    className = _i16.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth_idp.$className';
     }
-    className = _i16.Protocol().getClassNameForObject(data);
+    className = _i17.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth_core.$className';
     }
@@ -223,28 +240,31 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'Greeting') {
       return deserialize<_i4.Greeting>(data['data']);
     }
+    if (dataClassName == 'Image') {
+      return deserialize<_i5.Image>(data['data']);
+    }
     if (dataClassName == 'Participant') {
-      return deserialize<_i5.Participant>(data['data']);
+      return deserialize<_i6.Participant>(data['data']);
     }
     if (dataClassName == 'PriseContact') {
-      return deserialize<_i6.PriseContact>(data['data']);
+      return deserialize<_i7.PriseContact>(data['data']);
     }
     if (dataClassName == 'RendezVous') {
-      return deserialize<_i7.RendezVous>(data['data']);
+      return deserialize<_i8.RendezVous>(data['data']);
     }
     if (dataClassName == 'Seance') {
-      return deserialize<_i8.Seance>(data['data']);
+      return deserialize<_i9.Seance>(data['data']);
     }
     if (dataClassName == 'Utilisateur') {
-      return deserialize<_i9.Utilisateur>(data['data']);
+      return deserialize<_i10.Utilisateur>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth_idp.')) {
       data['className'] = dataClassName.substring(19);
-      return _i15.Protocol().deserializeByClassName(data);
+      return _i16.Protocol().deserializeByClassName(data);
     }
     if (dataClassName.startsWith('serverpod_auth_core.')) {
       data['className'] = dataClassName.substring(20);
-      return _i16.Protocol().deserializeByClassName(data);
+      return _i17.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }
@@ -259,10 +279,10 @@ class Protocol extends _i1.SerializationManager {
       return null;
     }
     try {
-      return _i15.Protocol().mapRecordToJson(record);
+      return _i16.Protocol().mapRecordToJson(record);
     } catch (_) {}
     try {
-      return _i16.Protocol().mapRecordToJson(record);
+      return _i17.Protocol().mapRecordToJson(record);
     } catch (_) {}
     throw Exception('Unsupported record type ${record.runtimeType}');
   }

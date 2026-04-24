@@ -1,0 +1,7 @@
+class: Image
+table: image
+fields:
+  seanceId: int
+  url: List<String>
+  legende: String?
+  date: DateTime

@@ -2,10 +2,16 @@ class: Seance
 table: seance
 fields:
   nom: String
-  objectifs: String?
-  zone: String
+  motifs: String?                 
+  typeSeance: String?             
+  cible: String?                  
+  zone: String?
+  ville: String?                 
+  quartier: String?               
   objectifParticipants: int
   organisateur: String
+  presentateur: String?           
+  assistants: List<String>?              
   datePrevue: DateTime
   heureDebut: String?
   heureFin: String?
@@ -13,3 +19,5 @@ fields:
   gadgetsPrevus: int
   gadgetsDistribues: int
   totalLogistique: double
+  nbParticipantsEstime: int?      
+  evaluation: bool                

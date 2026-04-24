@@ -11,15 +11,22 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'package:dlf_backend_server/src/generated/protocol.dart' as _i2;
 
 abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Seance._({
     this.id,
     required this.nom,
-    this.objectifs,
-    required this.zone,
+    this.motifs,
+    this.typeSeance,
+    this.cible,
+    this.zone,
+    this.ville,
+    this.quartier,
     required this.objectifParticipants,
     required this.organisateur,
+    this.presentateur,
+    this.assistants,
     required this.datePrevue,
     this.heureDebut,
     this.heureFin,
@@ -27,15 +34,23 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required this.gadgetsPrevus,
     required this.gadgetsDistribues,
     required this.totalLogistique,
+    this.nbParticipantsEstime,
+    required this.evaluation,
   });
 
   factory Seance({
     int? id,
     required String nom,
-    String? objectifs,
-    required String zone,
+    String? motifs,
+    String? typeSeance,
+    String? cible,
+    String? zone,
+    String? ville,
+    String? quartier,
     required int objectifParticipants,
     required String organisateur,
+    String? presentateur,
+    List<String>? assistants,
     required DateTime datePrevue,
     String? heureDebut,
     String? heureFin,
@@ -43,16 +58,28 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     required int gadgetsPrevus,
     required int gadgetsDistribues,
     required double totalLogistique,
+    int? nbParticipantsEstime,
+    required bool evaluation,
   }) = _SeanceImpl;
 
   factory Seance.fromJson(Map<String, dynamic> jsonSerialization) {
     return Seance(
       id: jsonSerialization['id'] as int?,
       nom: jsonSerialization['nom'] as String,
-      objectifs: jsonSerialization['objectifs'] as String?,
-      zone: jsonSerialization['zone'] as String,
+      motifs: jsonSerialization['motifs'] as String?,
+      typeSeance: jsonSerialization['typeSeance'] as String?,
+      cible: jsonSerialization['cible'] as String?,
+      zone: jsonSerialization['zone'] as String?,
+      ville: jsonSerialization['ville'] as String?,
+      quartier: jsonSerialization['quartier'] as String?,
       objectifParticipants: jsonSerialization['objectifParticipants'] as int,
       organisateur: jsonSerialization['organisateur'] as String,
+      presentateur: jsonSerialization['presentateur'] as String?,
+      assistants: jsonSerialization['assistants'] == null
+          ? null
+          : _i2.Protocol().deserialize<List<String>>(
+              jsonSerialization['assistants'],
+            ),
       datePrevue: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['datePrevue'],
       ),
@@ -64,6 +91,10 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       gadgetsPrevus: jsonSerialization['gadgetsPrevus'] as int,
       gadgetsDistribues: jsonSerialization['gadgetsDistribues'] as int,
       totalLogistique: (jsonSerialization['totalLogistique'] as num).toDouble(),
+      nbParticipantsEstime: jsonSerialization['nbParticipantsEstime'] as int?,
+      evaluation: _i1.BoolJsonExtension.fromJson(
+        jsonSerialization['evaluation'],
+      ),
     );
   }
 
@@ -76,13 +107,25 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   String nom;
 
-  String? objectifs;
+  String? motifs;
 
-  String zone;
+  String? typeSeance;
+
+  String? cible;
+
+  String? zone;
+
+  String? ville;
+
+  String? quartier;
 
   int objectifParticipants;
 
   String organisateur;
+
+  String? presentateur;
+
+  List<String>? assistants;
 
   DateTime datePrevue;
 
@@ -98,6 +141,10 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
 
   double totalLogistique;
 
+  int? nbParticipantsEstime;
+
+  bool evaluation;
+
   @override
   _i1.Table<int?> get table => t;
 
@@ -107,10 +154,16 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
   Seance copyWith({
     int? id,
     String? nom,
-    String? objectifs,
+    String? motifs,
+    String? typeSeance,
+    String? cible,
     String? zone,
+    String? ville,
+    String? quartier,
     int? objectifParticipants,
     String? organisateur,
+    String? presentateur,
+    List<String>? assistants,
     DateTime? datePrevue,
     String? heureDebut,
     String? heureFin,
@@ -118,6 +171,8 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
     int? gadgetsPrevus,
     int? gadgetsDistribues,
     double? totalLogistique,
+    int? nbParticipantsEstime,
+    bool? evaluation,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -125,10 +180,16 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       '__className__': 'Seance',
       if (id != null) 'id': id,
       'nom': nom,
-      if (objectifs != null) 'objectifs': objectifs,
-      'zone': zone,
+      if (motifs != null) 'motifs': motifs,
+      if (typeSeance != null) 'typeSeance': typeSeance,
+      if (cible != null) 'cible': cible,
+      if (zone != null) 'zone': zone,
+      if (ville != null) 'ville': ville,
+      if (quartier != null) 'quartier': quartier,
       'objectifParticipants': objectifParticipants,
       'organisateur': organisateur,
+      if (presentateur != null) 'presentateur': presentateur,
+      if (assistants != null) 'assistants': assistants?.toJson(),
       'datePrevue': datePrevue.toJson(),
       if (heureDebut != null) 'heureDebut': heureDebut,
       if (heureFin != null) 'heureFin': heureFin,
@@ -136,6 +197,9 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'gadgetsPrevus': gadgetsPrevus,
       'gadgetsDistribues': gadgetsDistribues,
       'totalLogistique': totalLogistique,
+      if (nbParticipantsEstime != null)
+        'nbParticipantsEstime': nbParticipantsEstime,
+      'evaluation': evaluation,
     };
   }
 
@@ -145,10 +209,16 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       '__className__': 'Seance',
       if (id != null) 'id': id,
       'nom': nom,
-      if (objectifs != null) 'objectifs': objectifs,
-      'zone': zone,
+      if (motifs != null) 'motifs': motifs,
+      if (typeSeance != null) 'typeSeance': typeSeance,
+      if (cible != null) 'cible': cible,
+      if (zone != null) 'zone': zone,
+      if (ville != null) 'ville': ville,
+      if (quartier != null) 'quartier': quartier,
       'objectifParticipants': objectifParticipants,
       'organisateur': organisateur,
+      if (presentateur != null) 'presentateur': presentateur,
+      if (assistants != null) 'assistants': assistants?.toJson(),
       'datePrevue': datePrevue.toJson(),
       if (heureDebut != null) 'heureDebut': heureDebut,
       if (heureFin != null) 'heureFin': heureFin,
@@ -156,6 +226,9 @@ abstract class Seance implements _i1.TableRow<int?>, _i1.ProtocolSerialization {
       'gadgetsPrevus': gadgetsPrevus,
       'gadgetsDistribues': gadgetsDistribues,
       'totalLogistique': totalLogistique,
+      if (nbParticipantsEstime != null)
+        'nbParticipantsEstime': nbParticipantsEstime,
+      'evaluation': evaluation,
     };
   }
 
@@ -195,10 +268,16 @@ class _SeanceImpl extends Seance {
   _SeanceImpl({
     int? id,
     required String nom,
-    String? objectifs,
-    required String zone,
+    String? motifs,
+    String? typeSeance,
+    String? cible,
+    String? zone,
+    String? ville,
+    String? quartier,
     required int objectifParticipants,
     required String organisateur,
+    String? presentateur,
+    List<String>? assistants,
     required DateTime datePrevue,
     String? heureDebut,
     String? heureFin,
@@ -206,13 +285,21 @@ class _SeanceImpl extends Seance {
     required int gadgetsPrevus,
     required int gadgetsDistribues,
     required double totalLogistique,
+    int? nbParticipantsEstime,
+    required bool evaluation,
   }) : super._(
          id: id,
          nom: nom,
-         objectifs: objectifs,
+         motifs: motifs,
+         typeSeance: typeSeance,
+         cible: cible,
          zone: zone,
+         ville: ville,
+         quartier: quartier,
          objectifParticipants: objectifParticipants,
          organisateur: organisateur,
+         presentateur: presentateur,
+         assistants: assistants,
          datePrevue: datePrevue,
          heureDebut: heureDebut,
          heureFin: heureFin,
@@ -220,6 +307,8 @@ class _SeanceImpl extends Seance {
          gadgetsPrevus: gadgetsPrevus,
          gadgetsDistribues: gadgetsDistribues,
          totalLogistique: totalLogistique,
+         nbParticipantsEstime: nbParticipantsEstime,
+         evaluation: evaluation,
        );
 
   /// Returns a shallow copy of this [Seance]
@@ -229,10 +318,16 @@ class _SeanceImpl extends Seance {
   Seance copyWith({
     Object? id = _Undefined,
     String? nom,
-    Object? objectifs = _Undefined,
-    String? zone,
+    Object? motifs = _Undefined,
+    Object? typeSeance = _Undefined,
+    Object? cible = _Undefined,
+    Object? zone = _Undefined,
+    Object? ville = _Undefined,
+    Object? quartier = _Undefined,
     int? objectifParticipants,
     String? organisateur,
+    Object? presentateur = _Undefined,
+    Object? assistants = _Undefined,
     DateTime? datePrevue,
     Object? heureDebut = _Undefined,
     Object? heureFin = _Undefined,
@@ -240,14 +335,24 @@ class _SeanceImpl extends Seance {
     int? gadgetsPrevus,
     int? gadgetsDistribues,
     double? totalLogistique,
+    Object? nbParticipantsEstime = _Undefined,
+    bool? evaluation,
   }) {
     return Seance(
       id: id is int? ? id : this.id,
       nom: nom ?? this.nom,
-      objectifs: objectifs is String? ? objectifs : this.objectifs,
-      zone: zone ?? this.zone,
+      motifs: motifs is String? ? motifs : this.motifs,
+      typeSeance: typeSeance is String? ? typeSeance : this.typeSeance,
+      cible: cible is String? ? cible : this.cible,
+      zone: zone is String? ? zone : this.zone,
+      ville: ville is String? ? ville : this.ville,
+      quartier: quartier is String? ? quartier : this.quartier,
       objectifParticipants: objectifParticipants ?? this.objectifParticipants,
       organisateur: organisateur ?? this.organisateur,
+      presentateur: presentateur is String? ? presentateur : this.presentateur,
+      assistants: assistants is List<String>?
+          ? assistants
+          : this.assistants?.map((e0) => e0).toList(),
       datePrevue: datePrevue ?? this.datePrevue,
       heureDebut: heureDebut is String? ? heureDebut : this.heureDebut,
       heureFin: heureFin is String? ? heureFin : this.heureFin,
@@ -255,6 +360,10 @@ class _SeanceImpl extends Seance {
       gadgetsPrevus: gadgetsPrevus ?? this.gadgetsPrevus,
       gadgetsDistribues: gadgetsDistribues ?? this.gadgetsDistribues,
       totalLogistique: totalLogistique ?? this.totalLogistique,
+      nbParticipantsEstime: nbParticipantsEstime is int?
+          ? nbParticipantsEstime
+          : this.nbParticipantsEstime,
+      evaluation: evaluation ?? this.evaluation,
     );
   }
 }
@@ -267,13 +376,33 @@ class SeanceUpdateTable extends _i1.UpdateTable<SeanceTable> {
     value,
   );
 
-  _i1.ColumnValue<String, String> objectifs(String? value) => _i1.ColumnValue(
-    table.objectifs,
+  _i1.ColumnValue<String, String> motifs(String? value) => _i1.ColumnValue(
+    table.motifs,
     value,
   );
 
-  _i1.ColumnValue<String, String> zone(String value) => _i1.ColumnValue(
+  _i1.ColumnValue<String, String> typeSeance(String? value) => _i1.ColumnValue(
+    table.typeSeance,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> cible(String? value) => _i1.ColumnValue(
+    table.cible,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> zone(String? value) => _i1.ColumnValue(
     table.zone,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> ville(String? value) => _i1.ColumnValue(
+    table.ville,
+    value,
+  );
+
+  _i1.ColumnValue<String, String> quartier(String? value) => _i1.ColumnValue(
+    table.quartier,
     value,
   );
 
@@ -286,6 +415,18 @@ class SeanceUpdateTable extends _i1.UpdateTable<SeanceTable> {
     table.organisateur,
     value,
   );
+
+  _i1.ColumnValue<String, String> presentateur(String? value) =>
+      _i1.ColumnValue(
+        table.presentateur,
+        value,
+      );
+
+  _i1.ColumnValue<List<String>, List<String>> assistants(List<String>? value) =>
+      _i1.ColumnValue(
+        table.assistants,
+        value,
+      );
 
   _i1.ColumnValue<DateTime, DateTime> datePrevue(DateTime value) =>
       _i1.ColumnValue(
@@ -323,6 +464,16 @@ class SeanceUpdateTable extends _i1.UpdateTable<SeanceTable> {
         table.totalLogistique,
         value,
       );
+
+  _i1.ColumnValue<int, int> nbParticipantsEstime(int? value) => _i1.ColumnValue(
+    table.nbParticipantsEstime,
+    value,
+  );
+
+  _i1.ColumnValue<bool, bool> evaluation(bool value) => _i1.ColumnValue(
+    table.evaluation,
+    value,
+  );
 }
 
 class SeanceTable extends _i1.Table<int?> {
@@ -332,12 +483,28 @@ class SeanceTable extends _i1.Table<int?> {
       'nom',
       this,
     );
-    objectifs = _i1.ColumnString(
-      'objectifs',
+    motifs = _i1.ColumnString(
+      'motifs',
+      this,
+    );
+    typeSeance = _i1.ColumnString(
+      'typeSeance',
+      this,
+    );
+    cible = _i1.ColumnString(
+      'cible',
       this,
     );
     zone = _i1.ColumnString(
       'zone',
+      this,
+    );
+    ville = _i1.ColumnString(
+      'ville',
+      this,
+    );
+    quartier = _i1.ColumnString(
+      'quartier',
       this,
     );
     objectifParticipants = _i1.ColumnInt(
@@ -346,6 +513,14 @@ class SeanceTable extends _i1.Table<int?> {
     );
     organisateur = _i1.ColumnString(
       'organisateur',
+      this,
+    );
+    presentateur = _i1.ColumnString(
+      'presentateur',
+      this,
+    );
+    assistants = _i1.ColumnSerializable<List<String>>(
+      'assistants',
       this,
     );
     datePrevue = _i1.ColumnDateTime(
@@ -376,19 +551,39 @@ class SeanceTable extends _i1.Table<int?> {
       'totalLogistique',
       this,
     );
+    nbParticipantsEstime = _i1.ColumnInt(
+      'nbParticipantsEstime',
+      this,
+    );
+    evaluation = _i1.ColumnBool(
+      'evaluation',
+      this,
+    );
   }
 
   late final SeanceUpdateTable updateTable;
 
   late final _i1.ColumnString nom;
 
-  late final _i1.ColumnString objectifs;
+  late final _i1.ColumnString motifs;
+
+  late final _i1.ColumnString typeSeance;
+
+  late final _i1.ColumnString cible;
 
   late final _i1.ColumnString zone;
+
+  late final _i1.ColumnString ville;
+
+  late final _i1.ColumnString quartier;
 
   late final _i1.ColumnInt objectifParticipants;
 
   late final _i1.ColumnString organisateur;
+
+  late final _i1.ColumnString presentateur;
+
+  late final _i1.ColumnSerializable<List<String>> assistants;
 
   late final _i1.ColumnDateTime datePrevue;
 
@@ -404,14 +599,24 @@ class SeanceTable extends _i1.Table<int?> {
 
   late final _i1.ColumnDouble totalLogistique;
 
+  late final _i1.ColumnInt nbParticipantsEstime;
+
+  late final _i1.ColumnBool evaluation;
+
   @override
   List<_i1.Column> get columns => [
     id,
     nom,
-    objectifs,
+    motifs,
+    typeSeance,
+    cible,
     zone,
+    ville,
+    quartier,
     objectifParticipants,
     organisateur,
+    presentateur,
+    assistants,
     datePrevue,
     heureDebut,
     heureFin,
@@ -419,6 +624,8 @@ class SeanceTable extends _i1.Table<int?> {
     gadgetsPrevus,
     gadgetsDistribues,
     totalLogistique,
+    nbParticipantsEstime,
+    evaluation,
   ];
 }
 
