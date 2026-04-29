@@ -25,6 +25,7 @@
       "name": "dlf_backend_server",
       "version": "0.0.0",
       "dependencies": [
+        "bcrypt",
         "serverpod",
         "serverpod_auth_idp_server"
       ],
@@ -179,6 +180,11 @@
     {
       "name": "lints",
       "version": "6.1.0",
+      "dependencies": []
+    },
+    {
+      "name": "bcrypt",
+      "version": "1.2.0",
       "dependencies": []
     },
     {

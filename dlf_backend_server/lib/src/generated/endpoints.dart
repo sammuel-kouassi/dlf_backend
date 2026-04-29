@@ -15,21 +15,23 @@ import '../auth/email_idp_endpoint.dart' as _i2;
 import '../auth/jwt_refresh_endpoint.dart' as _i3;
 import '../endpoints/auth_endpoint.dart' as _i4;
 import '../endpoints/gadget_endpoint.dart' as _i5;
-import '../endpoints/participant_endpoint.dart' as _i6;
-import '../endpoints/prise_contact_endpoint.dart' as _i7;
-import '../endpoints/rdv_endpoint.dart' as _i8;
-import '../endpoints/seance_endpoint.dart' as _i9;
-import '../greetings/greeting_endpoint.dart' as _i10;
-import 'package:dlf_backend_server/src/generated/utilisateur.dart' as _i11;
-import 'package:dlf_backend_server/src/generated/gadget.dart' as _i12;
-import 'package:dlf_backend_server/src/generated/participant.dart' as _i13;
-import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i14;
-import 'package:dlf_backend_server/src/generated/rdv.dart' as _i15;
-import 'package:dlf_backend_server/src/generated/seance.dart' as _i16;
+import '../endpoints/image_endpoint.dart' as _i6;
+import '../endpoints/participant_endpoint.dart' as _i7;
+import '../endpoints/prise_contact_endpoint.dart' as _i8;
+import '../endpoints/rdv_endpoint.dart' as _i9;
+import '../endpoints/seance_endpoint.dart' as _i10;
+import '../greetings/greeting_endpoint.dart' as _i11;
+import 'package:dlf_backend_server/src/generated/utilisateur.dart' as _i12;
+import 'package:dlf_backend_server/src/generated/gadget.dart' as _i13;
+import 'package:dlf_backend_server/src/generated/image.dart' as _i14;
+import 'package:dlf_backend_server/src/generated/participant.dart' as _i15;
+import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i16;
+import 'package:dlf_backend_server/src/generated/rdv.dart' as _i17;
+import 'package:dlf_backend_server/src/generated/seance.dart' as _i18;
 import 'package:serverpod_auth_idp_server/serverpod_auth_idp_server.dart'
-    as _i17;
+    as _i19;
 import 'package:serverpod_auth_core_server/serverpod_auth_core_server.dart'
-    as _i18;
+    as _i20;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -59,31 +61,37 @@ class Endpoints extends _i1.EndpointDispatch {
           'gadget',
           null,
         ),
-      'participant': _i6.ParticipantEndpoint()
+      'image': _i6.ImageEndpoint()
+        ..initialize(
+          server,
+          'image',
+          null,
+        ),
+      'participant': _i7.ParticipantEndpoint()
         ..initialize(
           server,
           'participant',
           null,
         ),
-      'priseContact': _i7.PriseContactEndpoint()
+      'priseContact': _i8.PriseContactEndpoint()
         ..initialize(
           server,
           'priseContact',
           null,
         ),
-      'rdv': _i8.RdvEndpoint()
+      'rdv': _i9.RdvEndpoint()
         ..initialize(
           server,
           'rdv',
           null,
         ),
-      'seance': _i9.SeanceEndpoint()
+      'seance': _i10.SeanceEndpoint()
         ..initialize(
           server,
           'seance',
           null,
         ),
-      'greeting': _i10.GreetingEndpoint()
+      'greeting': _i11.GreetingEndpoint()
         ..initialize(
           server,
           'greeting',
@@ -327,7 +335,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'user': _i1.ParameterDescription(
               name: 'user',
-              type: _i1.getType<_i11.Utilisateur>(),
+              type: _i1.getType<_i12.Utilisateur>(),
               nullable: false,
             ),
           },
@@ -361,7 +369,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'gadget': _i1.ParameterDescription(
               name: 'gadget',
-              type: _i1.getType<_i12.Gadget>(),
+              type: _i1.getType<_i13.Gadget>(),
               nullable: false,
             ),
           },
@@ -377,6 +385,67 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
+    connectors['image'] = _i1.EndpointConnector(
+      name: 'image',
+      endpoint: endpoints['image']!,
+      methodConnectors: {
+        'addImage': _i1.MethodConnector(
+          name: 'addImage',
+          params: {
+            'image': _i1.ParameterDescription(
+              name: 'image',
+              type: _i1.getType<_i14.Image>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['image'] as _i6.ImageEndpoint).addImage(
+                session,
+                params['image'],
+              ),
+        ),
+        'getImagesBySeance': _i1.MethodConnector(
+          name: 'getImagesBySeance',
+          params: {
+            'seanceId': _i1.ParameterDescription(
+              name: 'seanceId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['image'] as _i6.ImageEndpoint).getImagesBySeance(
+                    session,
+                    params['seanceId'],
+                  ),
+        ),
+        'deleteImage': _i1.MethodConnector(
+          name: 'deleteImage',
+          params: {
+            'imageId': _i1.ParameterDescription(
+              name: 'imageId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async => (endpoints['image'] as _i6.ImageEndpoint).deleteImage(
+                session,
+                params['imageId'],
+              ),
+        ),
+      },
+    );
     connectors['participant'] = _i1.EndpointConnector(
       name: 'participant',
       endpoint: endpoints['participant']!,
@@ -386,7 +455,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'participant': _i1.ParameterDescription(
               name: 'participant',
-              type: _i1.getType<_i13.Participant>(),
+              type: _i1.getType<_i15.Participant>(),
               nullable: false,
             ),
           },
@@ -394,7 +463,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['participant'] as _i6.ParticipantEndpoint)
+              ) async => (endpoints['participant'] as _i7.ParticipantEndpoint)
                   .addParticipant(
                     session,
                     params['participant'],
@@ -413,7 +482,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['participant'] as _i6.ParticipantEndpoint)
+              ) async => (endpoints['participant'] as _i7.ParticipantEndpoint)
                   .getParticipantsBySeance(
                     session,
                     params['seanceId'],
@@ -426,7 +495,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['participant'] as _i6.ParticipantEndpoint)
+              ) async => (endpoints['participant'] as _i7.ParticipantEndpoint)
                   .getAllParticipants(session),
         ),
         'deleteParticipant': _i1.MethodConnector(
@@ -442,7 +511,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['participant'] as _i6.ParticipantEndpoint)
+              ) async => (endpoints['participant'] as _i7.ParticipantEndpoint)
                   .deleteParticipant(
                     session,
                     params['id'],
@@ -453,7 +522,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'participant': _i1.ParameterDescription(
               name: 'participant',
-              type: _i1.getType<_i13.Participant>(),
+              type: _i1.getType<_i15.Participant>(),
               nullable: false,
             ),
           },
@@ -461,7 +530,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['participant'] as _i6.ParticipantEndpoint)
+              ) async => (endpoints['participant'] as _i7.ParticipantEndpoint)
                   .updateParticipant(
                     session,
                     params['participant'],
@@ -478,7 +547,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'priseContact': _i1.ParameterDescription(
               name: 'priseContact',
-              type: _i1.getType<_i14.PriseContact>(),
+              type: _i1.getType<_i16.PriseContact>(),
               nullable: false,
             ),
           },
@@ -486,7 +555,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['priseContact'] as _i7.PriseContactEndpoint)
+              ) async => (endpoints['priseContact'] as _i8.PriseContactEndpoint)
                   .addPriseContact(
                     session,
                     params['priseContact'],
@@ -499,7 +568,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['priseContact'] as _i7.PriseContactEndpoint)
+              ) async => (endpoints['priseContact'] as _i8.PriseContactEndpoint)
                   .getAllPriseContacts(session),
         ),
         'updatePriseContact': _i1.MethodConnector(
@@ -507,7 +576,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'priseContact': _i1.ParameterDescription(
               name: 'priseContact',
-              type: _i1.getType<_i14.PriseContact>(),
+              type: _i1.getType<_i16.PriseContact>(),
               nullable: false,
             ),
           },
@@ -515,7 +584,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['priseContact'] as _i7.PriseContactEndpoint)
+              ) async => (endpoints['priseContact'] as _i8.PriseContactEndpoint)
                   .updatePriseContact(
                     session,
                     params['priseContact'],
@@ -534,7 +603,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['priseContact'] as _i7.PriseContactEndpoint)
+              ) async => (endpoints['priseContact'] as _i8.PriseContactEndpoint)
                   .deletePriseContact(
                     session,
                     params['id'],
@@ -551,7 +620,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'rdv': _i1.ParameterDescription(
               name: 'rdv',
-              type: _i1.getType<_i15.RendezVous>(),
+              type: _i1.getType<_i17.RendezVous>(),
               nullable: false,
             ),
           },
@@ -559,7 +628,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['rdv'] as _i8.RdvEndpoint).addRdv(
+              ) async => (endpoints['rdv'] as _i9.RdvEndpoint).addRdv(
                 session,
                 params['rdv'],
               ),
@@ -572,14 +641,14 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['rdv'] as _i8.RdvEndpoint).getAllRdvs(session),
+                  (endpoints['rdv'] as _i9.RdvEndpoint).getAllRdvs(session),
         ),
         'updateRdv': _i1.MethodConnector(
           name: 'updateRdv',
           params: {
             'rdv': _i1.ParameterDescription(
               name: 'rdv',
-              type: _i1.getType<_i15.RendezVous>(),
+              type: _i1.getType<_i17.RendezVous>(),
               nullable: false,
             ),
           },
@@ -587,7 +656,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['rdv'] as _i8.RdvEndpoint).updateRdv(
+              ) async => (endpoints['rdv'] as _i9.RdvEndpoint).updateRdv(
                 session,
                 params['rdv'],
               ),
@@ -605,7 +674,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['rdv'] as _i8.RdvEndpoint).deleteRdv(
+              ) async => (endpoints['rdv'] as _i9.RdvEndpoint).deleteRdv(
                 session,
                 params['id'],
               ),
@@ -623,7 +692,7 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['seance'] as _i9.SeanceEndpoint)
+              ) async => (endpoints['seance'] as _i10.SeanceEndpoint)
                   .getAllSeances(session),
         ),
         'updateSeance': _i1.MethodConnector(
@@ -631,7 +700,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'seance': _i1.ParameterDescription(
               name: 'seance',
-              type: _i1.getType<_i16.Seance>(),
+              type: _i1.getType<_i18.Seance>(),
               nullable: false,
             ),
           },
@@ -640,9 +709,53 @@ class Endpoints extends _i1.EndpointDispatch {
                 _i1.Session session,
                 Map<String, dynamic> params,
               ) async =>
-                  (endpoints['seance'] as _i9.SeanceEndpoint).updateSeance(
+                  (endpoints['seance'] as _i10.SeanceEndpoint).updateSeance(
                     session,
                     params['seance'],
+                  ),
+        ),
+        'cloreSeance': _i1.MethodConnector(
+          name: 'cloreSeance',
+          params: {
+            'seanceId': _i1.ParameterDescription(
+              name: 'seanceId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'nbParticipantsEstime': _i1.ParameterDescription(
+              name: 'nbParticipantsEstime',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['seance'] as _i10.SeanceEndpoint).cloreSeance(
+                    session,
+                    params['seanceId'],
+                    params['nbParticipantsEstime'],
+                  ),
+        ),
+        'getUploadUrl': _i1.MethodConnector(
+          name: 'getUploadUrl',
+          params: {
+            'fileName': _i1.ParameterDescription(
+              name: 'fileName',
+              type: _i1.getType<String>(),
+              nullable: false,
+            ),
+          },
+          call:
+              (
+                _i1.Session session,
+                Map<String, dynamic> params,
+              ) async =>
+                  (endpoints['seance'] as _i10.SeanceEndpoint).getUploadUrl(
+                    session,
+                    params['fileName'],
                   ),
         ),
       },
@@ -664,16 +777,16 @@ class Endpoints extends _i1.EndpointDispatch {
               (
                 _i1.Session session,
                 Map<String, dynamic> params,
-              ) async => (endpoints['greeting'] as _i10.GreetingEndpoint).hello(
+              ) async => (endpoints['greeting'] as _i11.GreetingEndpoint).hello(
                 session,
                 params['name'],
               ),
         ),
       },
     );
-    modules['serverpod_auth_idp'] = _i17.Endpoints()
+    modules['serverpod_auth_idp'] = _i19.Endpoints()
       ..initializeEndpoints(server);
-    modules['serverpod_auth_core'] = _i18.Endpoints()
+    modules['serverpod_auth_core'] = _i20.Endpoints()
       ..initializeEndpoints(server);
   }
 }

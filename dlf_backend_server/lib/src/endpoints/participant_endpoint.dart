@@ -39,8 +39,6 @@ class ParticipantEndpoint extends Endpoint {
         level: LogLevel.info,
       );
     } else {
-      // Si on arrive ici, c'est qu'il est déjà supprimé ou introuvable.
-      // On ne fait pas crasher le serveur.
       session.log(
         '⚠️ Tentative de suppression ignorée : Participant $id introuvable.',
         level: LogLevel.warning,
@@ -48,7 +46,7 @@ class ParticipantEndpoint extends Endpoint {
     }
   }
 
-  // 2. Modifier un participant
+  //Modifier un participant
   Future<Participant> updateParticipant(
     Session session,
     Participant participant,

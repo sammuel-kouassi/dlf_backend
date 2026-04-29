@@ -26,10 +26,11 @@ import 'rdv.dart' as _i11;
 import 'seance.dart' as _i12;
 import 'utilisateur.dart' as _i13;
 import 'package:dlf_backend_server/src/generated/gadget.dart' as _i14;
-import 'package:dlf_backend_server/src/generated/participant.dart' as _i15;
-import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i16;
-import 'package:dlf_backend_server/src/generated/rdv.dart' as _i17;
-import 'package:dlf_backend_server/src/generated/seance.dart' as _i18;
+import 'package:dlf_backend_server/src/generated/image.dart' as _i15;
+import 'package:dlf_backend_server/src/generated/participant.dart' as _i16;
+import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i17;
+import 'package:dlf_backend_server/src/generated/rdv.dart' as _i18;
+import 'package:dlf_backend_server/src/generated/seance.dart' as _i19;
 export 'distribution.dart';
 export 'gadget.dart';
 export 'greetings/greeting.dart';
@@ -829,24 +830,28 @@ class Protocol extends _i1.SerializationManagerServer {
       return (data as List).map((e) => deserialize<_i14.Gadget>(e)).toList()
           as T;
     }
-    if (t == List<_i15.Participant>) {
+    if (t == List<_i15.Image>) {
+      return (data as List).map((e) => deserialize<_i15.Image>(e)).toList()
+          as T;
+    }
+    if (t == List<_i16.Participant>) {
       return (data as List)
-              .map((e) => deserialize<_i15.Participant>(e))
+              .map((e) => deserialize<_i16.Participant>(e))
               .toList()
           as T;
     }
-    if (t == List<_i16.PriseContact>) {
+    if (t == List<_i17.PriseContact>) {
       return (data as List)
-              .map((e) => deserialize<_i16.PriseContact>(e))
+              .map((e) => deserialize<_i17.PriseContact>(e))
               .toList()
           as T;
     }
-    if (t == List<_i17.RendezVous>) {
-      return (data as List).map((e) => deserialize<_i17.RendezVous>(e)).toList()
+    if (t == List<_i18.RendezVous>) {
+      return (data as List).map((e) => deserialize<_i18.RendezVous>(e)).toList()
           as T;
     }
-    if (t == List<_i18.Seance>) {
-      return (data as List).map((e) => deserialize<_i18.Seance>(e)).toList()
+    if (t == List<_i19.Seance>) {
+      return (data as List).map((e) => deserialize<_i19.Seance>(e)).toList()
           as T;
     }
     try {

@@ -18,13 +18,14 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
     as _i4;
 import 'package:dlf_backend_client/src/protocol/utilisateur.dart' as _i5;
 import 'package:dlf_backend_client/src/protocol/gadget.dart' as _i6;
-import 'package:dlf_backend_client/src/protocol/participant.dart' as _i7;
-import 'package:dlf_backend_client/src/protocol/prise_contact.dart' as _i8;
-import 'package:dlf_backend_client/src/protocol/rdv.dart' as _i9;
-import 'package:dlf_backend_client/src/protocol/seance.dart' as _i10;
+import 'package:dlf_backend_client/src/protocol/image.dart' as _i7;
+import 'package:dlf_backend_client/src/protocol/participant.dart' as _i8;
+import 'package:dlf_backend_client/src/protocol/prise_contact.dart' as _i9;
+import 'package:dlf_backend_client/src/protocol/rdv.dart' as _i10;
+import 'package:dlf_backend_client/src/protocol/seance.dart' as _i11;
 import 'package:dlf_backend_client/src/protocol/greetings/greeting.dart'
-    as _i11;
-import 'protocol.dart' as _i12;
+    as _i12;
+import 'protocol.dart' as _i13;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -297,28 +298,56 @@ class EndpointGadget extends _i2.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointImage extends _i2.EndpointRef {
+  EndpointImage(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'image';
+
+  _i3.Future<_i7.Image> addImage(_i7.Image image) =>
+      caller.callServerEndpoint<_i7.Image>(
+        'image',
+        'addImage',
+        {'image': image},
+      );
+
+  _i3.Future<List<_i7.Image>> getImagesBySeance(int seanceId) =>
+      caller.callServerEndpoint<List<_i7.Image>>(
+        'image',
+        'getImagesBySeance',
+        {'seanceId': seanceId},
+      );
+
+  _i3.Future<void> deleteImage(int imageId) => caller.callServerEndpoint<void>(
+    'image',
+    'deleteImage',
+    {'imageId': imageId},
+  );
+}
+
+/// {@category Endpoint}
 class EndpointParticipant extends _i2.EndpointRef {
   EndpointParticipant(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'participant';
 
-  _i3.Future<_i7.Participant> addParticipant(_i7.Participant participant) =>
-      caller.callServerEndpoint<_i7.Participant>(
+  _i3.Future<_i8.Participant> addParticipant(_i8.Participant participant) =>
+      caller.callServerEndpoint<_i8.Participant>(
         'participant',
         'addParticipant',
         {'participant': participant},
       );
 
-  _i3.Future<List<_i7.Participant>> getParticipantsBySeance(int seanceId) =>
-      caller.callServerEndpoint<List<_i7.Participant>>(
+  _i3.Future<List<_i8.Participant>> getParticipantsBySeance(int seanceId) =>
+      caller.callServerEndpoint<List<_i8.Participant>>(
         'participant',
         'getParticipantsBySeance',
         {'seanceId': seanceId},
       );
 
-  _i3.Future<List<_i7.Participant>> getAllParticipants() =>
-      caller.callServerEndpoint<List<_i7.Participant>>(
+  _i3.Future<List<_i8.Participant>> getAllParticipants() =>
+      caller.callServerEndpoint<List<_i8.Participant>>(
         'participant',
         'getAllParticipants',
         {},
@@ -330,8 +359,8 @@ class EndpointParticipant extends _i2.EndpointRef {
     {'id': id},
   );
 
-  _i3.Future<_i7.Participant> updateParticipant(_i7.Participant participant) =>
-      caller.callServerEndpoint<_i7.Participant>(
+  _i3.Future<_i8.Participant> updateParticipant(_i8.Participant participant) =>
+      caller.callServerEndpoint<_i8.Participant>(
         'participant',
         'updateParticipant',
         {'participant': participant},
@@ -345,23 +374,23 @@ class EndpointPriseContact extends _i2.EndpointRef {
   @override
   String get name => 'priseContact';
 
-  _i3.Future<_i8.PriseContact> addPriseContact(_i8.PriseContact priseContact) =>
-      caller.callServerEndpoint<_i8.PriseContact>(
+  _i3.Future<_i9.PriseContact> addPriseContact(_i9.PriseContact priseContact) =>
+      caller.callServerEndpoint<_i9.PriseContact>(
         'priseContact',
         'addPriseContact',
         {'priseContact': priseContact},
       );
 
-  _i3.Future<List<_i8.PriseContact>> getAllPriseContacts() =>
-      caller.callServerEndpoint<List<_i8.PriseContact>>(
+  _i3.Future<List<_i9.PriseContact>> getAllPriseContacts() =>
+      caller.callServerEndpoint<List<_i9.PriseContact>>(
         'priseContact',
         'getAllPriseContacts',
         {},
       );
 
-  _i3.Future<_i8.PriseContact> updatePriseContact(
-    _i8.PriseContact priseContact,
-  ) => caller.callServerEndpoint<_i8.PriseContact>(
+  _i3.Future<_i9.PriseContact> updatePriseContact(
+    _i9.PriseContact priseContact,
+  ) => caller.callServerEndpoint<_i9.PriseContact>(
     'priseContact',
     'updatePriseContact',
     {'priseContact': priseContact},
@@ -382,22 +411,22 @@ class EndpointRdv extends _i2.EndpointRef {
   @override
   String get name => 'rdv';
 
-  _i3.Future<_i9.RendezVous> addRdv(_i9.RendezVous rdv) =>
-      caller.callServerEndpoint<_i9.RendezVous>(
+  _i3.Future<_i10.RendezVous> addRdv(_i10.RendezVous rdv) =>
+      caller.callServerEndpoint<_i10.RendezVous>(
         'rdv',
         'addRdv',
         {'rdv': rdv},
       );
 
-  _i3.Future<List<_i9.RendezVous>> getAllRdvs() =>
-      caller.callServerEndpoint<List<_i9.RendezVous>>(
+  _i3.Future<List<_i10.RendezVous>> getAllRdvs() =>
+      caller.callServerEndpoint<List<_i10.RendezVous>>(
         'rdv',
         'getAllRdvs',
         {},
       );
 
-  _i3.Future<_i9.RendezVous> updateRdv(_i9.RendezVous rdv) =>
-      caller.callServerEndpoint<_i9.RendezVous>(
+  _i3.Future<_i10.RendezVous> updateRdv(_i10.RendezVous rdv) =>
+      caller.callServerEndpoint<_i10.RendezVous>(
         'rdv',
         'updateRdv',
         {'rdv': rdv},
@@ -417,18 +446,37 @@ class EndpointSeance extends _i2.EndpointRef {
   @override
   String get name => 'seance';
 
-  _i3.Future<List<_i10.Seance>> getAllSeances() =>
-      caller.callServerEndpoint<List<_i10.Seance>>(
+  _i3.Future<List<_i11.Seance>> getAllSeances() =>
+      caller.callServerEndpoint<List<_i11.Seance>>(
         'seance',
         'getAllSeances',
         {},
       );
 
-  _i3.Future<_i10.Seance> updateSeance(_i10.Seance seance) =>
-      caller.callServerEndpoint<_i10.Seance>(
+  _i3.Future<_i11.Seance> updateSeance(_i11.Seance seance) =>
+      caller.callServerEndpoint<_i11.Seance>(
         'seance',
         'updateSeance',
         {'seance': seance},
+      );
+
+  _i3.Future<_i11.Seance> cloreSeance(
+    int seanceId,
+    int nbParticipantsEstime,
+  ) => caller.callServerEndpoint<_i11.Seance>(
+    'seance',
+    'cloreSeance',
+    {
+      'seanceId': seanceId,
+      'nbParticipantsEstime': nbParticipantsEstime,
+    },
+  );
+
+  _i3.Future<String?> getUploadUrl(String fileName) =>
+      caller.callServerEndpoint<String?>(
+        'seance',
+        'getUploadUrl',
+        {'fileName': fileName},
       );
 }
 
@@ -442,8 +490,8 @@ class EndpointGreeting extends _i2.EndpointRef {
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i11.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i11.Greeting>(
+  _i3.Future<_i12.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i12.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -481,7 +529,7 @@ class Client extends _i2.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
          host,
-         _i12.Protocol(),
+         _i13.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -494,6 +542,7 @@ class Client extends _i2.ServerpodClientShared {
     jwtRefresh = EndpointJwtRefresh(this);
     auth = EndpointAuth(this);
     gadget = EndpointGadget(this);
+    image = EndpointImage(this);
     participant = EndpointParticipant(this);
     priseContact = EndpointPriseContact(this);
     rdv = EndpointRdv(this);
@@ -509,6 +558,8 @@ class Client extends _i2.ServerpodClientShared {
   late final EndpointAuth auth;
 
   late final EndpointGadget gadget;
+
+  late final EndpointImage image;
 
   late final EndpointParticipant participant;
 
@@ -528,6 +579,7 @@ class Client extends _i2.ServerpodClientShared {
     'jwtRefresh': jwtRefresh,
     'auth': auth,
     'gadget': gadget,
+    'image': image,
     'participant': participant,
     'priseContact': priseContact,
     'rdv': rdv,

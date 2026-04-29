@@ -15,6 +15,10 @@ auth:
 gadget:
   - getAllGadgets:
   - updateGadget:
+image:
+  - addImage:
+  - getImagesBySeance:
+  - deleteImage:
 participant:
   - addParticipant:
   - getParticipantsBySeance:
@@ -34,5 +38,7 @@ rdv:
 seance:
   - getAllSeances:
   - updateSeance:
+  - cloreSeance:
+  - getUploadUrl:
 greeting:
   - hello:

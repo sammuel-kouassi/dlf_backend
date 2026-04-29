@@ -15,7 +15,7 @@ class PriseContactEndpoint extends Endpoint {
     return await PriseContact.db.find(
       session,
       orderBy: (t) => t.id,
-      orderDescending: true, // Les plus récents en premier
+      orderDescending: true,
     );
   }
 
@@ -37,7 +37,7 @@ class PriseContactEndpoint extends Endpoint {
       await PriseContact.db.deleteRow(session, contact);
       print('✅ PriseContact $id supprimée sur le serveur.');
     } else {
-      // Si déjà supprimé, on ne fait rien (évite l'erreur 500)
+      // Si déjà supprimé, on ne fait rien
       print('⚠️ PriseContact $id déjà absente du serveur.');
     }
   }
