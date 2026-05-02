@@ -19,6 +19,12 @@ image:
   - addImage:
   - getImagesBySeance:
   - deleteImage:
+notification:
+  - getMobileNotifications:
+  - getUnreadMobileNotifications:
+  - markAsRead:
+  - markAllMobileAsRead:
+  - createFromMobile:
 participant:
   - addParticipant:
   - getParticipantsBySeance:
@@ -40,5 +46,6 @@ seance:
   - updateSeance:
   - cloreSeance:
   - getUploadUrl:
+  - updateNbParticipants:
 greeting:
   - hello:

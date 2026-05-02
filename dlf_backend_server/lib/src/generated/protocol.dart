@@ -20,21 +20,24 @@ import 'distribution.dart' as _i5;
 import 'gadget.dart' as _i6;
 import 'greetings/greeting.dart' as _i7;
 import 'image.dart' as _i8;
-import 'participant.dart' as _i9;
-import 'prise_contact.dart' as _i10;
-import 'rdv.dart' as _i11;
-import 'seance.dart' as _i12;
-import 'utilisateur.dart' as _i13;
-import 'package:dlf_backend_server/src/generated/gadget.dart' as _i14;
-import 'package:dlf_backend_server/src/generated/image.dart' as _i15;
-import 'package:dlf_backend_server/src/generated/participant.dart' as _i16;
-import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i17;
-import 'package:dlf_backend_server/src/generated/rdv.dart' as _i18;
-import 'package:dlf_backend_server/src/generated/seance.dart' as _i19;
+import 'notification.dart' as _i9;
+import 'participant.dart' as _i10;
+import 'prise_contact.dart' as _i11;
+import 'rdv.dart' as _i12;
+import 'seance.dart' as _i13;
+import 'utilisateur.dart' as _i14;
+import 'package:dlf_backend_server/src/generated/gadget.dart' as _i15;
+import 'package:dlf_backend_server/src/generated/image.dart' as _i16;
+import 'package:dlf_backend_server/src/generated/notification.dart' as _i17;
+import 'package:dlf_backend_server/src/generated/participant.dart' as _i18;
+import 'package:dlf_backend_server/src/generated/prise_contact.dart' as _i19;
+import 'package:dlf_backend_server/src/generated/rdv.dart' as _i20;
+import 'package:dlf_backend_server/src/generated/seance.dart' as _i21;
 export 'distribution.dart';
 export 'gadget.dart';
 export 'greetings/greeting.dart';
 export 'image.dart';
+export 'notification.dart';
 export 'participant.dart';
 export 'prise_contact.dart';
 export 'rdv.dart';
@@ -215,6 +218,86 @@ class Protocol extends _i1.SerializationManagerServer {
       indexes: [
         _i2.IndexDefinition(
           indexName: 'image_pkey',
+          tableSpace: null,
+          elements: [
+            _i2.IndexElementDefinition(
+              type: _i2.IndexElementDefinitionType.column,
+              definition: 'id',
+            ),
+          ],
+          type: 'btree',
+          isUnique: true,
+          isPrimary: true,
+        ),
+      ],
+      managed: true,
+    ),
+    _i2.TableDefinition(
+      name: 'notification',
+      dartName: 'Notification',
+      schema: 'public',
+      module: 'dlf_backend',
+      columns: [
+        _i2.ColumnDefinition(
+          name: 'id',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int?',
+          columnDefault: 'nextval(\'notification_id_seq\'::regclass)',
+        ),
+        _i2.ColumnDefinition(
+          name: 'titre',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'corps',
+          columnType: _i2.ColumnType.text,
+          isNullable: true,
+          dartType: 'String?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'type',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'source',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'cible',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'entityId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: true,
+          dartType: 'int?',
+        ),
+        _i2.ColumnDefinition(
+          name: 'isRead',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+      ],
+      foreignKeys: [],
+      indexes: [
+        _i2.IndexDefinition(
+          indexName: 'notification_pkey',
           tableSpace: null,
           elements: [
             _i2.IndexElementDefinition(
@@ -775,20 +858,23 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i8.Image) {
       return _i8.Image.fromJson(data) as T;
     }
-    if (t == _i9.Participant) {
-      return _i9.Participant.fromJson(data) as T;
+    if (t == _i9.Notification) {
+      return _i9.Notification.fromJson(data) as T;
     }
-    if (t == _i10.PriseContact) {
-      return _i10.PriseContact.fromJson(data) as T;
+    if (t == _i10.Participant) {
+      return _i10.Participant.fromJson(data) as T;
     }
-    if (t == _i11.RendezVous) {
-      return _i11.RendezVous.fromJson(data) as T;
+    if (t == _i11.PriseContact) {
+      return _i11.PriseContact.fromJson(data) as T;
     }
-    if (t == _i12.Seance) {
-      return _i12.Seance.fromJson(data) as T;
+    if (t == _i12.RendezVous) {
+      return _i12.RendezVous.fromJson(data) as T;
     }
-    if (t == _i13.Utilisateur) {
-      return _i13.Utilisateur.fromJson(data) as T;
+    if (t == _i13.Seance) {
+      return _i13.Seance.fromJson(data) as T;
+    }
+    if (t == _i14.Utilisateur) {
+      return _i14.Utilisateur.fromJson(data) as T;
     }
     if (t == _i1.getType<_i5.Distribution?>()) {
       return (data != null ? _i5.Distribution.fromJson(data) : null) as T;
@@ -802,20 +888,23 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i8.Image?>()) {
       return (data != null ? _i8.Image.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.Participant?>()) {
-      return (data != null ? _i9.Participant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.Notification?>()) {
+      return (data != null ? _i9.Notification.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.PriseContact?>()) {
-      return (data != null ? _i10.PriseContact.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.Participant?>()) {
+      return (data != null ? _i10.Participant.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.RendezVous?>()) {
-      return (data != null ? _i11.RendezVous.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.PriseContact?>()) {
+      return (data != null ? _i11.PriseContact.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.Seance?>()) {
-      return (data != null ? _i12.Seance.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i12.RendezVous?>()) {
+      return (data != null ? _i12.RendezVous.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i13.Utilisateur?>()) {
-      return (data != null ? _i13.Utilisateur.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i13.Seance?>()) {
+      return (data != null ? _i13.Seance.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i14.Utilisateur?>()) {
+      return (data != null ? _i14.Utilisateur.fromJson(data) : null) as T;
     }
     if (t == List<String>) {
       return (data as List).map((e) => deserialize<String>(e)).toList() as T;
@@ -826,32 +915,38 @@ class Protocol extends _i1.SerializationManagerServer {
               : null)
           as T;
     }
-    if (t == List<_i14.Gadget>) {
-      return (data as List).map((e) => deserialize<_i14.Gadget>(e)).toList()
+    if (t == List<_i15.Gadget>) {
+      return (data as List).map((e) => deserialize<_i15.Gadget>(e)).toList()
           as T;
     }
-    if (t == List<_i15.Image>) {
-      return (data as List).map((e) => deserialize<_i15.Image>(e)).toList()
+    if (t == List<_i16.Image>) {
+      return (data as List).map((e) => deserialize<_i16.Image>(e)).toList()
           as T;
     }
-    if (t == List<_i16.Participant>) {
+    if (t == List<_i17.Notification>) {
       return (data as List)
-              .map((e) => deserialize<_i16.Participant>(e))
+              .map((e) => deserialize<_i17.Notification>(e))
               .toList()
           as T;
     }
-    if (t == List<_i17.PriseContact>) {
+    if (t == List<_i18.Participant>) {
       return (data as List)
-              .map((e) => deserialize<_i17.PriseContact>(e))
+              .map((e) => deserialize<_i18.Participant>(e))
               .toList()
           as T;
     }
-    if (t == List<_i18.RendezVous>) {
-      return (data as List).map((e) => deserialize<_i18.RendezVous>(e)).toList()
+    if (t == List<_i19.PriseContact>) {
+      return (data as List)
+              .map((e) => deserialize<_i19.PriseContact>(e))
+              .toList()
           as T;
     }
-    if (t == List<_i19.Seance>) {
-      return (data as List).map((e) => deserialize<_i19.Seance>(e)).toList()
+    if (t == List<_i20.RendezVous>) {
+      return (data as List).map((e) => deserialize<_i20.RendezVous>(e)).toList()
+          as T;
+    }
+    if (t == List<_i21.Seance>) {
+      return (data as List).map((e) => deserialize<_i21.Seance>(e)).toList()
           as T;
     }
     try {
@@ -872,11 +967,12 @@ class Protocol extends _i1.SerializationManagerServer {
       _i6.Gadget => 'Gadget',
       _i7.Greeting => 'Greeting',
       _i8.Image => 'Image',
-      _i9.Participant => 'Participant',
-      _i10.PriseContact => 'PriseContact',
-      _i11.RendezVous => 'RendezVous',
-      _i12.Seance => 'Seance',
-      _i13.Utilisateur => 'Utilisateur',
+      _i9.Notification => 'Notification',
+      _i10.Participant => 'Participant',
+      _i11.PriseContact => 'PriseContact',
+      _i12.RendezVous => 'RendezVous',
+      _i13.Seance => 'Seance',
+      _i14.Utilisateur => 'Utilisateur',
       _ => null,
     };
   }
@@ -899,15 +995,17 @@ class Protocol extends _i1.SerializationManagerServer {
         return 'Greeting';
       case _i8.Image():
         return 'Image';
-      case _i9.Participant():
+      case _i9.Notification():
+        return 'Notification';
+      case _i10.Participant():
         return 'Participant';
-      case _i10.PriseContact():
+      case _i11.PriseContact():
         return 'PriseContact';
-      case _i11.RendezVous():
+      case _i12.RendezVous():
         return 'RendezVous';
-      case _i12.Seance():
+      case _i13.Seance():
         return 'Seance';
-      case _i13.Utilisateur():
+      case _i14.Utilisateur():
         return 'Utilisateur';
     }
     className = _i2.Protocol().getClassNameForObject(data);
@@ -943,20 +1041,23 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName == 'Image') {
       return deserialize<_i8.Image>(data['data']);
     }
+    if (dataClassName == 'Notification') {
+      return deserialize<_i9.Notification>(data['data']);
+    }
     if (dataClassName == 'Participant') {
-      return deserialize<_i9.Participant>(data['data']);
+      return deserialize<_i10.Participant>(data['data']);
     }
     if (dataClassName == 'PriseContact') {
-      return deserialize<_i10.PriseContact>(data['data']);
+      return deserialize<_i11.PriseContact>(data['data']);
     }
     if (dataClassName == 'RendezVous') {
-      return deserialize<_i11.RendezVous>(data['data']);
+      return deserialize<_i12.RendezVous>(data['data']);
     }
     if (dataClassName == 'Seance') {
-      return deserialize<_i12.Seance>(data['data']);
+      return deserialize<_i13.Seance>(data['data']);
     }
     if (dataClassName == 'Utilisateur') {
-      return deserialize<_i13.Utilisateur>(data['data']);
+      return deserialize<_i14.Utilisateur>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -1000,16 +1101,18 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i6.Gadget.t;
       case _i8.Image:
         return _i8.Image.t;
-      case _i9.Participant:
-        return _i9.Participant.t;
-      case _i10.PriseContact:
-        return _i10.PriseContact.t;
-      case _i11.RendezVous:
-        return _i11.RendezVous.t;
-      case _i12.Seance:
-        return _i12.Seance.t;
-      case _i13.Utilisateur:
-        return _i13.Utilisateur.t;
+      case _i9.Notification:
+        return _i9.Notification.t;
+      case _i10.Participant:
+        return _i10.Participant.t;
+      case _i11.PriseContact:
+        return _i11.PriseContact.t;
+      case _i12.RendezVous:
+        return _i12.RendezVous.t;
+      case _i13.Seance:
+        return _i13.Seance.t;
+      case _i14.Utilisateur:
+        return _i14.Utilisateur.t;
     }
     return null;
   }

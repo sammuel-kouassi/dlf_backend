@@ -19,13 +19,14 @@ import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
 import 'package:dlf_backend_client/src/protocol/utilisateur.dart' as _i5;
 import 'package:dlf_backend_client/src/protocol/gadget.dart' as _i6;
 import 'package:dlf_backend_client/src/protocol/image.dart' as _i7;
-import 'package:dlf_backend_client/src/protocol/participant.dart' as _i8;
-import 'package:dlf_backend_client/src/protocol/prise_contact.dart' as _i9;
-import 'package:dlf_backend_client/src/protocol/rdv.dart' as _i10;
-import 'package:dlf_backend_client/src/protocol/seance.dart' as _i11;
+import 'package:dlf_backend_client/src/protocol/notification.dart' as _i8;
+import 'package:dlf_backend_client/src/protocol/participant.dart' as _i9;
+import 'package:dlf_backend_client/src/protocol/prise_contact.dart' as _i10;
+import 'package:dlf_backend_client/src/protocol/rdv.dart' as _i11;
+import 'package:dlf_backend_client/src/protocol/seance.dart' as _i12;
 import 'package:dlf_backend_client/src/protocol/greetings/greeting.dart'
-    as _i12;
-import 'protocol.dart' as _i13;
+    as _i13;
+import 'protocol.dart' as _i14;
 
 /// By extending [EmailIdpBaseEndpoint], the email identity provider endpoints
 /// are made available on the server and enable the corresponding sign-in widget
@@ -326,28 +327,84 @@ class EndpointImage extends _i2.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointNotification extends _i2.EndpointRef {
+  EndpointNotification(_i2.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'notification';
+
+  _i3.Future<List<_i8.Notification>> getMobileNotifications() =>
+      caller.callServerEndpoint<List<_i8.Notification>>(
+        'notification',
+        'getMobileNotifications',
+        {},
+      );
+
+  /// Récupère uniquement les notifications non lues pour le mobile.
+  _i3.Future<List<_i8.Notification>> getUnreadMobileNotifications() =>
+      caller.callServerEndpoint<List<_i8.Notification>>(
+        'notification',
+        'getUnreadMobileNotifications',
+        {},
+      );
+
+  /// Marque une notification comme lue.
+  _i3.Future<bool> markAsRead(int notificationId) =>
+      caller.callServerEndpoint<bool>(
+        'notification',
+        'markAsRead',
+        {'notificationId': notificationId},
+      );
+
+  /// Marque toutes les notifications mobiles comme lues.
+  _i3.Future<void> markAllMobileAsRead() => caller.callServerEndpoint<void>(
+    'notification',
+    'markAllMobileAsRead',
+    {},
+  );
+
+  /// Crée une notification depuis le mobile (ex: nouveau RDV pris sur mobile).
+  /// Elle sera visible côté web.
+  _i3.Future<_i8.Notification> createFromMobile({
+    required String titre,
+    required String corps,
+    required String type,
+    int? entityId,
+  }) => caller.callServerEndpoint<_i8.Notification>(
+    'notification',
+    'createFromMobile',
+    {
+      'titre': titre,
+      'corps': corps,
+      'type': type,
+      'entityId': entityId,
+    },
+  );
+}
+
+/// {@category Endpoint}
 class EndpointParticipant extends _i2.EndpointRef {
   EndpointParticipant(_i2.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'participant';
 
-  _i3.Future<_i8.Participant> addParticipant(_i8.Participant participant) =>
-      caller.callServerEndpoint<_i8.Participant>(
+  _i3.Future<_i9.Participant> addParticipant(_i9.Participant participant) =>
+      caller.callServerEndpoint<_i9.Participant>(
         'participant',
         'addParticipant',
         {'participant': participant},
       );
 
-  _i3.Future<List<_i8.Participant>> getParticipantsBySeance(int seanceId) =>
-      caller.callServerEndpoint<List<_i8.Participant>>(
+  _i3.Future<List<_i9.Participant>> getParticipantsBySeance(int seanceId) =>
+      caller.callServerEndpoint<List<_i9.Participant>>(
         'participant',
         'getParticipantsBySeance',
         {'seanceId': seanceId},
       );
 
-  _i3.Future<List<_i8.Participant>> getAllParticipants() =>
-      caller.callServerEndpoint<List<_i8.Participant>>(
+  _i3.Future<List<_i9.Participant>> getAllParticipants() =>
+      caller.callServerEndpoint<List<_i9.Participant>>(
         'participant',
         'getAllParticipants',
         {},
@@ -359,8 +416,8 @@ class EndpointParticipant extends _i2.EndpointRef {
     {'id': id},
   );
 
-  _i3.Future<_i8.Participant> updateParticipant(_i8.Participant participant) =>
-      caller.callServerEndpoint<_i8.Participant>(
+  _i3.Future<_i9.Participant> updateParticipant(_i9.Participant participant) =>
+      caller.callServerEndpoint<_i9.Participant>(
         'participant',
         'updateParticipant',
         {'participant': participant},
@@ -374,23 +431,24 @@ class EndpointPriseContact extends _i2.EndpointRef {
   @override
   String get name => 'priseContact';
 
-  _i3.Future<_i9.PriseContact> addPriseContact(_i9.PriseContact priseContact) =>
-      caller.callServerEndpoint<_i9.PriseContact>(
-        'priseContact',
-        'addPriseContact',
-        {'priseContact': priseContact},
-      );
+  _i3.Future<_i10.PriseContact> addPriseContact(
+    _i10.PriseContact priseContact,
+  ) => caller.callServerEndpoint<_i10.PriseContact>(
+    'priseContact',
+    'addPriseContact',
+    {'priseContact': priseContact},
+  );
 
-  _i3.Future<List<_i9.PriseContact>> getAllPriseContacts() =>
-      caller.callServerEndpoint<List<_i9.PriseContact>>(
+  _i3.Future<List<_i10.PriseContact>> getAllPriseContacts() =>
+      caller.callServerEndpoint<List<_i10.PriseContact>>(
         'priseContact',
         'getAllPriseContacts',
         {},
       );
 
-  _i3.Future<_i9.PriseContact> updatePriseContact(
-    _i9.PriseContact priseContact,
-  ) => caller.callServerEndpoint<_i9.PriseContact>(
+  _i3.Future<_i10.PriseContact> updatePriseContact(
+    _i10.PriseContact priseContact,
+  ) => caller.callServerEndpoint<_i10.PriseContact>(
     'priseContact',
     'updatePriseContact',
     {'priseContact': priseContact},
@@ -411,22 +469,22 @@ class EndpointRdv extends _i2.EndpointRef {
   @override
   String get name => 'rdv';
 
-  _i3.Future<_i10.RendezVous> addRdv(_i10.RendezVous rdv) =>
-      caller.callServerEndpoint<_i10.RendezVous>(
+  _i3.Future<_i11.RendezVous> addRdv(_i11.RendezVous rdv) =>
+      caller.callServerEndpoint<_i11.RendezVous>(
         'rdv',
         'addRdv',
         {'rdv': rdv},
       );
 
-  _i3.Future<List<_i10.RendezVous>> getAllRdvs() =>
-      caller.callServerEndpoint<List<_i10.RendezVous>>(
+  _i3.Future<List<_i11.RendezVous>> getAllRdvs() =>
+      caller.callServerEndpoint<List<_i11.RendezVous>>(
         'rdv',
         'getAllRdvs',
         {},
       );
 
-  _i3.Future<_i10.RendezVous> updateRdv(_i10.RendezVous rdv) =>
-      caller.callServerEndpoint<_i10.RendezVous>(
+  _i3.Future<_i11.RendezVous> updateRdv(_i11.RendezVous rdv) =>
+      caller.callServerEndpoint<_i11.RendezVous>(
         'rdv',
         'updateRdv',
         {'rdv': rdv},
@@ -446,24 +504,24 @@ class EndpointSeance extends _i2.EndpointRef {
   @override
   String get name => 'seance';
 
-  _i3.Future<List<_i11.Seance>> getAllSeances() =>
-      caller.callServerEndpoint<List<_i11.Seance>>(
+  _i3.Future<List<_i12.Seance>> getAllSeances() =>
+      caller.callServerEndpoint<List<_i12.Seance>>(
         'seance',
         'getAllSeances',
         {},
       );
 
-  _i3.Future<_i11.Seance> updateSeance(_i11.Seance seance) =>
-      caller.callServerEndpoint<_i11.Seance>(
+  _i3.Future<_i12.Seance> updateSeance(_i12.Seance seance) =>
+      caller.callServerEndpoint<_i12.Seance>(
         'seance',
         'updateSeance',
         {'seance': seance},
       );
 
-  _i3.Future<_i11.Seance> cloreSeance(
+  _i3.Future<_i12.Seance> cloreSeance(
     int seanceId,
     int nbParticipantsEstime,
-  ) => caller.callServerEndpoint<_i11.Seance>(
+  ) => caller.callServerEndpoint<_i12.Seance>(
     'seance',
     'cloreSeance',
     {
@@ -478,6 +536,18 @@ class EndpointSeance extends _i2.EndpointRef {
         'getUploadUrl',
         {'fileName': fileName},
       );
+
+  _i3.Future<_i12.Seance?> updateNbParticipants(
+    int seanceId,
+    int nbParticipantsEstime,
+  ) => caller.callServerEndpoint<_i12.Seance?>(
+    'seance',
+    'updateNbParticipants',
+    {
+      'seanceId': seanceId,
+      'nbParticipantsEstime': nbParticipantsEstime,
+    },
+  );
 }
 
 /// This is an example endpoint that returns a greeting message through
@@ -490,8 +560,8 @@ class EndpointGreeting extends _i2.EndpointRef {
   String get name => 'greeting';
 
   /// Returns a personalized greeting message: "Hello {name}".
-  _i3.Future<_i12.Greeting> hello(String name) =>
-      caller.callServerEndpoint<_i12.Greeting>(
+  _i3.Future<_i13.Greeting> hello(String name) =>
+      caller.callServerEndpoint<_i13.Greeting>(
         'greeting',
         'hello',
         {'name': name},
@@ -529,7 +599,7 @@ class Client extends _i2.ServerpodClientShared {
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
          host,
-         _i13.Protocol(),
+         _i14.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -543,6 +613,7 @@ class Client extends _i2.ServerpodClientShared {
     auth = EndpointAuth(this);
     gadget = EndpointGadget(this);
     image = EndpointImage(this);
+    notification = EndpointNotification(this);
     participant = EndpointParticipant(this);
     priseContact = EndpointPriseContact(this);
     rdv = EndpointRdv(this);
@@ -560,6 +631,8 @@ class Client extends _i2.ServerpodClientShared {
   late final EndpointGadget gadget;
 
   late final EndpointImage image;
+
+  late final EndpointNotification notification;
 
   late final EndpointParticipant participant;
 
@@ -580,6 +653,7 @@ class Client extends _i2.ServerpodClientShared {
     'auth': auth,
     'gadget': gadget,
     'image': image,
+    'notification': notification,
     'participant': participant,
     'priseContact': priseContact,
     'rdv': rdv,

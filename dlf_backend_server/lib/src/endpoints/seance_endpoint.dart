@@ -35,4 +35,18 @@ class SeanceEndpoint extends Endpoint {
       path: 'seance_images/$fileName',
     );
   }
+
+  Future<Seance?> updateNbParticipants(
+    Session session,
+    int seanceId,
+    int nbParticipantsEstime,
+  ) async {
+    final seance = await Seance.db.findById(session, seanceId);
+    if (seance == null) return null;
+
+    final updated = seance.copyWith(
+      nbParticipantsEstime: nbParticipantsEstime,
+    );
+    return await Seance.db.updateRow(session, updated);
+  }
 }

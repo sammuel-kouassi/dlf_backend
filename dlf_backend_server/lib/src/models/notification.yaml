@@ -1,0 +1,11 @@
+class: Notification
+table: notification
+fields:
+  titre: String
+  corps: String?
+  type: String          
+  source: String        
+  cible: String         
+  entityId: int?        
+  isRead: bool
+  createdAt: DateTime
